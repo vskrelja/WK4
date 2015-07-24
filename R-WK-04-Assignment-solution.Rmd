@@ -1,0 +1,31 @@
+---
+title: "R WK4 Assignment Solution"
+author: "vskrelja"
+date: "July 24, 2015"
+output: html_document
+---
+
+Exploratory Data Analysis in R. Choose an interesting dataset and use R graphics to describe the data. You may use base R graphics, or a graphics package of your choice. You should include at least one example of each of the following: histogram, boxplot, scatterplot. 
+
+Do the graphics provide insight into any relationships in the data?
+
+Observations on 235K Peer-to-Peer Loans Originated in 2013/2014:
+
+Histogram - All scores below 660 are lumped together with the majority of borrower scores below 700.
+
+Boxplot - Lender assigns loan grades based on various credit parameters with "A" being the highest. As shown a borrower can have a high loan grade even with a low fico.
+
+Scatterplot - Similar to the boxplot conclusion, interest rates charged can be high even with an excellent fico.
+
+
+```{r}
+# Read peer-to-peer loan data:
+LoanStats <- read.table("https://raw.githubusercontent.com/vskrelja/WK4/master/LoanStats.csv", header=TRUE, sep=",")
+```
+```{r, echo=FALSE}
+hist(LoanStats$fico_range_low, breaks=50, xlim=c(min(LoanStats$fico_range_low)-10, max(LoanStats$fico_range_low)+10), main="Distribution of Borrower Fico Scores", xlab="Fico Score")
+
+boxplot(LoanStats$fico_range_low ~ LoanStats$grade, main="Lender's Grade vs. Fico Score", xlab="Grade", ylab="Fico")
+
+plot(LoanStats$fico_range_low ~ LoanStats$int_rate, pch=7, main="Fico Score vs. Interest Rate", xlab="Interest Rate", ylab="Fico")
+```
